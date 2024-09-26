@@ -21,16 +21,19 @@ public class Member extends BaseEntity {
     private Long memberId;
 
     private String name;
+
     private String password;
+
+    @Column(unique = true)
     private String id;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Board> boards;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Reply> replies;
 
     public static Member createMember(MemberDTO memberDTO, PasswordEncoder passwordEncoder) {
