@@ -33,7 +33,7 @@ public class SecurityConfig {
         // hasRole("ADMIN") : 관리자의 경우 /admin/로 접근하는 경로를 통과시킴
         // .anyRequest().authenticated() : 위의 경우 이외의 페이지는 인증절차가 필요함
         http.authorizeRequests()
-                .mvcMatchers("/", "/members/**", "/item/**",
+                .mvcMatchers("/", "/members/**", "/board/**",
                         "/images/**", "error", "favicon.ico").permitAll()
                 .mvcMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
