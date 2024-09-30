@@ -20,6 +20,12 @@
                 e.preventDefault();
                 page(0);
             });
+            const message = [[${message}]];
+            if (message) {
+                alert(message);
+            }
+            console.log("message" + message);
+
         });
 
         function page(page) {

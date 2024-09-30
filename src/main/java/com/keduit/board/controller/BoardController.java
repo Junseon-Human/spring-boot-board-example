@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -63,6 +64,36 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    @PostMapping("/board/showModify/{boardId}")
+    public String showBoardModify(Model model, @PathVariable("boardId") Long boardId, Principal principal) {
+
+
+
+        Board board = boardService.getBoard(boardId);
+        BoardDTO  boardDTO = BoardDTO.of(board);
+
+        model.addAttribute("boardDTO", boardDTO);
+        model.addAttribute("memberId", principal.getName());
+        System.out.println("boardDTO=========================" + boardDTO);
+
+        return  "board/write";
+    }
+
+    @PostMapping("/board/modify/{boardId}")
+    public String boardModify(@Valid BoardDTO boardDTO, BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes, Model model, @PathVariable("boardId") Long boardId) {
+
+
+        boardService.updateBoard(boardDTO, boardId);
+
+        System.out.println("boardDTO=========================" + boardDTO);
+        redirectAttributes.addFlashAttribute("message", "작업이 완료되었습니다.");
+
+
+        return "redirect:/board";
+    }
+
+
     @GetMapping("/board/boardDtl/{boardId}")
     public String BoardWrite(@PathVariable("boardId") Long boardId, Model model, Principal principal) {
 
@@ -70,9 +101,28 @@ public class BoardController {
         Board board = boardService.getBoard(boardId);
 
         model.addAttribute("boardDTO", boardDTO);
-        model.addAttribute("postmemberid", principal.getName());
+        String memberId = principal != null ? principal.getName() : "noOne";
+        model.addAttribute("memberId", memberId);
 
-        return "board/write";
+        return "board/boardDtl";
+    }
+
+    @PostMapping("/board/delete/{boardId}")
+    public String BoardDelete(@PathVariable("boardId") Long boardId, Model model, Principal principal) {
+        BoardDTO boardDTO = boardService.getBoardDtl(boardId);
+        Board board = boardService.getBoard(boardId);
+        model.addAttribute("boardDTO", boardDTO);
+        String memberId = principal != null ? principal.getName() : "noOne";
+        model.addAttribute("memberId", memberId);
+
+        if(!boardService.validationBoard(boardId, principal.getName())) {
+            model.addAttribute("errorMessage", "삭제 권한이 없습니다.");
+            return "board/boardDtl";
+        }
+        boardService.validationBoard(boardId, principal.getName());
+        boardService.deleteBoard(boardId);
+
+        return "redirect:/board";
     }
 
 

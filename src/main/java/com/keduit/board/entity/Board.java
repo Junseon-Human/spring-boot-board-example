@@ -1,5 +1,6 @@
 package com.keduit.board.entity;
 
+import com.keduit.board.dto.BoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,4 +28,10 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Reply> replies;
+
+    public void updateBoard(BoardDTO boardDTO) {
+        this.title = boardDTO.getTitle();
+        this.content = boardDTO.getContent();
+        this.setUpdateTime(LocalDateTime.now());
+    }
 }
