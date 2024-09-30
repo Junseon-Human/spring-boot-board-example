@@ -69,7 +69,6 @@ public class BoardController {
         BoardDTO boardDTO = boardService.getBoardDtl(boardId);
         Board board = boardService.getBoard(boardId);
 
-        model.addAttribute("board", board);
         model.addAttribute("boardDTO", boardDTO);
         model.addAttribute("postmemberid", principal.getName());
 

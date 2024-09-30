@@ -1,6 +1,5 @@
 package com.keduit.board.repository;
 
-import com.keduit.board.dto.BoardDTO;
 import com.keduit.board.dto.BoardSearchDTO;
 import com.keduit.board.entity.Board;
 import com.keduit.board.entity.QBoard;

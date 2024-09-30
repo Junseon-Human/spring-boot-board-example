@@ -61,7 +61,7 @@
                 <label class="input-group-text" th:for="writer">작성자</label>
             </div>
             <input id="writer" type="text" class="form-control"
-            th:value="${#strings.isEmpty(boardDTO.boardId) ? memberId : board.createBy}"
+            th:value="${#strings.isEmpty(boardDTO.boardId) ? memberId : boardDTO.createBy}"
             readonly>
         </div>
 
@@ -75,7 +75,7 @@
             </button>
         </div>
         <div th:unless="${#strings.isEmpty(boardDTO.boardId)}">
-            <div th:if="${board.createBy == postmemberid}" style="text-align: center">
+            <div th:if="${boardDTO.createBy == postmemberid}" style="text-align: center">
                 <button th:formaction="@{'/board/write/' + boardDTO.boardId}" type="submit"
                         class="btn btn-danger">
                     수정

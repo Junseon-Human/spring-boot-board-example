@@ -24,7 +24,10 @@ public class BoardDTO {
     @NotEmpty(message = "제목은 필수 입력 입니다.")
     private String content;
 
+    private String createBy;
+
     private static ModelMapper modelMapper = new ModelMapper();
+
 
     // DTO -> Entity
     public Board createBoard(Member member) {
