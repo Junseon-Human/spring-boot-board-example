@@ -25,6 +25,17 @@
             <label for="password">Password</label>
             <input type="password" name="password" class="form-control" id="password" placeholder="비밀번호을 입력하새요">
         </div>
+        <div class="form-group">
+            <a th:href="${location}">
+                <img src="/images/kakao_login_medium_narrow.png">
+            </a>
+        </div>
+        <div class="form-group">
+            <a href="https://nid.naver.com/oauth2.0/authorize"
+               th:href="@{https://nid.naver.com/oauth2.0/authorize(client_id=${naverClientId}, redirect_uri=${naverRedirectUri}, response_type='code', state=${state})}">
+                <img src="/images/btnG_완성형.png" style="width: 183px; height: 45px" >
+            </a>
+        </div>
 
         <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}">Incorrect Data</p>
 
